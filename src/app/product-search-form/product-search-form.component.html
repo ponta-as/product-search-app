@@ -1,0 +1,48 @@
+<form class="form-grid" (ngSubmit)="onSearch()" novalidate>
+  <div class="form-field">
+    <label class="form-label" for="name">商品名</label>
+    <input
+      id="name"
+      class="input"
+      type="text"
+      name="name"
+      [(ngModel)]="form.name"
+      placeholder="例）Laptop" />
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="category">カテゴリ</label>
+    <select
+      id="category"
+      class="select"
+      name="category"
+      [(ngModel)]="form.category">
+      <option value="">（指定なし）</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="minPrice">価格 (Min)</label>
+    <input
+      id="minPrice"
+      class="input"
+      type="number"
+      name="minPrice"
+      [(ngModel)]="form.minPrice" />
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="maxPrice">価格 (Max)</label>
+    <input
+      id="maxPrice"
+      class="input"
+      type="number"
+      name="maxPrice"
+      [(ngModel)]="form.maxPrice" />
+  </div>
+
+  <div class="form-field">
+    <button type="submit" class="btn btn--primary">検索</button>
+  </div>
+</form>

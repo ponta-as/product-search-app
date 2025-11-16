@@ -1,0 +1,21 @@
+<div class="app-container">
+  <h1>{{ title }}</h1>
+
+  <section class="search-section">
+    <h2>検索条件</h2>
+    <app-product-search-form (search)="onSearch($event)"></app-product-search-form>
+  </section>
+
+  <section class="result-section" *ngIf="products.length; else noResult">
+    <h2>検索結果</h2>
+    <app-product-list
+      [products]="products"
+      [isInCart]="isInCart"
+      (toggleCart)="onToggleCart($event)">
+    </app-product-list>
+  </section>
+
+  <ng-template #noResult>
+    <p>検索結果がありません。条件を入力して「検索」を押してください。</p>
+  </ng-template>
+</div>

@@ -1,0 +1,367 @@
+/* =====================================================
+   Design Tokens（デザイントークン）
+   - ライト / ダークテーマ共通で使うCSS変数を定義
+   - 色、余白、影、角丸などの共通値を集中管理
+===================================================== */
+:root {
+    /* 基本カラー（ライトモード） */
+    --bg: #f7f7fb;
+    /* 背景色 */
+    --panel: #ffffff;
+    /* カードやパネルの背景 */
+    --text: #0f172a;
+    /* メインテキスト */
+    --muted: #6b7280;
+    /* 補足テキスト（サブカラー） */
+    --primary: #2563eb;
+    /* ブランドカラー（青系） */
+    --primary-ink: #ffffff;
+    /* プライマリボタン上の文字色 */
+    --ring: rgba(37, 99, 235, .35);
+    /* フォーカスリングの色 */
+    --border: #e5e7eb;
+    /* 枠線の色 */
+    --favorite: #facc15;
+    /* お気に入り（★）の色 */
+
+    /* レイアウト・影・角丸 */
+    --radius: 14px;
+    --shadow: 0 6px 24px rgba(15, 23, 42, .08);
+    --shadow-sm: 0 2px 10px rgba(15, 23, 42, .06);
+
+    /* スペーシング単位（共通余白） */
+    --space-1: 6px;
+    --space-2: 10px;
+    --space-3: 14px;
+    --space-4: 18px;
+    --space-5: 24px;
+    --space-6: 32px;
+
+    /* コンポーネント専用カラー */
+    --table-stripe: #fafafa;
+    /* テーブル行の交互背景 */
+    --badge-bg: #eef2ff;
+    /* バッジの背景色 */
+    --badge-fg: #3730a3;
+    /* バッジの文字色 */
+}
+
+/* =====================================================
+   ダークテーマ設定
+   - OSの「ダークモード」設定を自動検知
+===================================================== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #0b0f1a;
+        --panel: #0f172a;
+        --text: #e5e7eb;
+        --muted: #94a3b8;
+        --primary: #60a5fa;
+        --primary-ink: #0b0f1a;
+        --ring: rgba(96, 165, 250, .45);
+        --border: #1f2937;
+        --table-stripe: #0d1322;
+        --badge-bg: #111827;
+        --badge-fg: #93c5fd;
+        --shadow: 0 6px 24px rgba(2, 6, 23, .5);
+        --shadow-sm: 0 2px 10px rgba(2, 6, 23, .4);
+    }
+
+    /* 入力系のコントロール調整 */
+    .input,
+    .select {
+        color: #f8fafc;
+        /* より明るい白に変更 */
+    }
+
+    /* プルダウン（select）の選択肢スタイル */
+    .select option {
+        background: var(--bg);
+        color: var(--text);
+    }
+}
+
+/* =====================================================
+   Base（全体初期設定）
+   - box-sizingやフォント、背景などの基本ルール
+===================================================== */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+}
+
+/* =====================================================
+   Layout（アプリ全体のレイアウト構造）
+===================================================== */
+.app-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: var(--space-6) var(--space-5);
+}
+
+.app-header {
+    margin-bottom: var(--space-5);
+    display: grid;
+    gap: var(--space-2);
+}
+
+.app-title {
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+.app-subtitle {
+    color: var(--muted);
+}
+
+/* =====================================================
+   Card（カードUIコンポーネント）
+===================================================== */
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.card__header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.card__title {
+    font-weight: 600;
+}
+
+.card__actions {
+    display: flex;
+    gap: var(--space-2);
+}
+
+.card__body {
+    padding: var(--space-5);
+}
+
+/* =====================================================
+   Controls（フォーム部品・ボタンなど）
+===================================================== */
+.input,
+.select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+/* フォーカス時の視覚効果 */
+.input:focus,
+.select:focus {
+    box-shadow: 0 0 0 4px var(--ring);
+    border-color: var(--primary);
+}
+
+/* 通常ボタン */
+.btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: transform .05s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    font-weight: 500;
+    /* 若干太字にして視認性UP */
+}
+
+/* ボタンのホバー・クリック時の動き */
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* カラーバリエーション */
+.btn--primary {
+    background: var(--primary);
+    color: var(--primary-ink);
+    border-color: transparent;
+}
+
+.btn--ghost {
+    background: transparent;
+    box-shadow: none;
+}
+
+.btn--icon {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =====================================================
+   Form Layout（フォーム配置）
+===================================================== */
+.form-grid {
+    display: grid;
+    gap: var(--space-4);
+    align-items: end;
+    /* ラベルと入力欄を下揃え */
+}
+
+/* 幅720px以上でカラム化 */
+@media (min-width: 720px) {
+    .form-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+}
+
+.form-field {
+    display: grid;
+    gap: 6px;
+}
+
+/* フォーム内のボタンは幅100% */
+.form-field .btn {
+    width: 100%;
+}
+
+.form-label {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* =====================================================
+   Table（一覧表示）
+===================================================== */
+.table-wrap {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/* テーブルヘッダー */
+.table thead th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--muted);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent);
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+/* テーブル本体 */
+.table tbody td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table tbody tr:nth-child(odd) td {
+    background: var(--table-stripe);
+}
+
+/* アクション列（右端ボタン列） */
+.th-action,
+.td-action {
+    text-align: center;
+}
+
+.td-action {
+    width: 1%;
+}
+
+/* =====================================================
+   Favorite Button（お気に入りボタン）
+===================================================== */
+.fav-btn {
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 999px;
+    /* 完全な円形に */
+    width: 36px;
+    height: 36px;
+    line-height: 1;
+}
+
+.fav-btn--active {
+    color: var(--favorite);
+}
+
+/* =====================================================
+   Badge（ステータスラベル）
+===================================================== */
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 12px;
+    border-radius: 999px;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+    font-weight: 500;
+}
+
+/* =====================================================
+   Empty / Skeleton（データなし・ローディング）
+===================================================== */
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 64px 24px;
+}
+
+/* ローディング時のキラッとアニメーション */
+.skeleton {
+    border-radius: 8px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, .12), rgba(0, 0, 0, .06));
+    background-size: 200% 100%;
+    animation: shimmer 1.2s infinite;
+    height: 12px;
+    width: 100%;
+}
+
+/* シマー（光の動き）アニメーション定義 */
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}

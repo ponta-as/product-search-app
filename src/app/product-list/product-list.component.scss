@@ -1,0 +1,23 @@
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.th-action,
+.td-action {
+  text-align: center;
+}
+
+.cart-btn {
+  min-width: 40px;
+}

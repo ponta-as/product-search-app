@@ -1,0 +1,57 @@
+.app-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  margin-bottom: 16px;
+}
+
+.search-section,
+.result-section {
+  margin-top: 24px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.th-action,
+.td-action {
+  text-align: center;
+}
+
+.btn {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #666;
+  background: #fff;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background: #1976d2;
+  color: #fff;
+  border-color: #1976d2;
+}
+
+.btn--ghost {
+  background: #fff;
+  color: #333;
+}
+
+.cart-btn--active {
+  font-weight: bold;
+}

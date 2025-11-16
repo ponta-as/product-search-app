@@ -1,0 +1,29 @@
+// Copilot設定ファイル（.vscode/settings.json）
+// ================================================
+// ONにしたい場合は「Copilot ON」ブロックを残して、
+// OFFにしたい場合は「Copilot OFF」ブロックを残してください。
+// ================================================
+// === Copilot ON ===
+// {
+//   "github.copilot.enable": {
+//     "*": false,
+//     "typescript": true,
+//     "javascript": true,
+//     "css": true
+//   },
+//   "editor.inlineSuggest.enabled": true,
+//   "editor.inlineSuggest.showToolbar": "always"
+// }
+// === Copilot OFF ===
+{
+    "github.copilot.enable": {
+        "*": false,
+        "typescript": false,
+        "javascript": false,
+        "css": false,
+        "plaintext": false,
+        "markdown": false
+    },
+    "editor.inlineSuggest.enabled": false,
+    "editor.inlineSuggest.showToolbar": "never",
+}
