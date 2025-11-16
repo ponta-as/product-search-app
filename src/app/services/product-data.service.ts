@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Product } from '../models';
 
 export interface ProductSearchCondition {
@@ -10,31 +11,68 @@ export interface ProductSearchCondition {
 
 @Injectable({ providedIn: 'root' })
 export class ProductDataService {
-  private readonly products: Product[] = [
-    { id: 1, name: 'Laptop Pro 14"', category: 'PC', price: 148000 },
-    { id: 2, name: 'Laptop Air 13"', category: 'PC', price: 118000 },
-    { id: 3, name: 'USB-C Hub 7-in-1', category: 'Accessory', price: 7800 },
-    { id: 4, name: 'Wireless Mouse', category: 'Accessory', price: 3200 },
-    { id: 5, name: '4K Monitor 27"', category: 'Display', price: 39800 },
-    { id: 6, name: 'Noise Cancelling Headset', category: 'Accessory', price: 24800 },
-    { id: 7, name: 'Tablet 10"', category: 'Tablet', price: 49800 },
-  ];
+  /** CSV 読み込み済みフラグ */
+  private loaded = false;
 
+  /** 商品データ一覧 */
+  private products: Product[] = [];
+
+  constructor(private http: HttpClient) {
+    /** サービス生成時に CSV を読み込み */
+    this.loadProductsFromCSV();
+  }
+
+  /** CSV を取得して読み込む */
+  private loadProductsFromCSV(): void {
+    if (this.loaded) return;
+
+    this.http
+      .get('assets/products.csv', { responseType: 'text' })
+      .subscribe({
+        next: csv => {
+          this.products = this.parseCSV(csv);
+          this.loaded = true;
+        },
+        error: () => {
+          // エラー時も loaded を true にして無限待ちを防止
+          this.loaded = true;
+          console.error('Failed to load products.csv');
+        }
+      });
+  }
+
+  /** CSV → Product[] に変換 */
+  private parseCSV(csv: string): Product[] {
+    const lines = csv.trim().split('\n');
+    lines.shift(); // 先頭行はヘッダー
+
+    return lines.map(line => {
+      const [id, name, category, price] = line.split(',');
+
+      return {
+        id: Number(id),
+        name: name.trim(),
+        category: category.trim(),
+        price: Number(price),
+      } as Product;
+    });
+  }
+
+  /** 検索条件で商品を絞り込み */
   search(cond: ProductSearchCondition): Product[] {
+    if (!this.loaded) return [];
+
     return this.products.filter(p => {
-      if (cond.name && !p.name.toLowerCase().includes(cond.name.toLowerCase())) {
-        return false;
-      }
-      if (cond.category && p.category !== cond.category) {
-        return false;
-      }
-      if (cond.minPrice != null && p.price < cond.minPrice) {
-        return false;
-      }
-      if (cond.maxPrice != null && p.price > cond.maxPrice) {
-        return false;
-      }
+      if (cond.name && !p.name.toLowerCase().includes(cond.name.toLowerCase())) return false;
+      if (cond.category && p.category !== cond.category) return false;
+      if (cond.minPrice != null && p.price < cond.minPrice) return false;
+      if (cond.maxPrice != null && p.price > cond.maxPrice) return false;
       return true;
     });
   }
+
+  .subscribe({
+    next: csv => { ... },
+    error: () => { this.loaded = true; }
+});
 }

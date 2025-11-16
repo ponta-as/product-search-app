@@ -1,5 +1,7 @@
 <div class="table-wrap">
   <table class="table">
+
+    <!-- テーブルヘッダー：一覧カラム -->
     <thead>
       <tr>
         <th>ID</th>
@@ -9,22 +11,26 @@
         <th class="th-action">Cart</th>
       </tr>
     </thead>
+
+    <!-- 商品リストの表示 -->
     <tbody>
       <tr *ngFor="let p of products">
         <td>{{ p.id }}</td>
         <td>{{ p.name }}</td>
         <td>{{ p.category }}</td>
+
+        <!-- 金額は通貨形式で表示 -->
         <td>{{ p.price | currency:'JPY':'symbol':'1.0-0' }}</td>
+
+        <!-- カート操作ボタン -->
         <td class="td-action">
-          <button
-            class="btn btn--ghost cart-btn"
-            [class.cart-btn--active]="isInCart(p.id)"
-            (click)="onClickToggle(p.id)"
+          <button class="btn btn--ghost cart-btn" [class.cart-btn--active]="isInCart(p.id)" (click)="onToggleCart(p.id)"
             title="Toggle Cart">
             {{ isInCart(p.id) ? '🛒' : '＋' }}
           </button>
         </td>
       </tr>
     </tbody>
+
   </table>
 </div>

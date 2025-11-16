@@ -1,367 +1,394 @@
 /* =====================================================
-   Design Tokens（デザイントークン）
-   - ライト / ダークテーマ共通で使うCSS変数を定義
-   - 色、余白、影、角丸などの共通値を集中管理
+   課題B：商品検索＆カート管理 用スタイル
+   - 課題Aとは別テーマ（ミントグリーン＋オレンジ系）
+   - グローバルスタイルとして利用する想定
 ===================================================== */
+
+/* -----------------------------
+   Design Tokens
+----------------------------- */
 :root {
-    /* 基本カラー（ライトモード） */
-    --bg: #f7f7fb;
-    /* 背景色 */
-    --panel: #ffffff;
-    /* カードやパネルの背景 */
-    --text: #0f172a;
-    /* メインテキスト */
-    --muted: #6b7280;
-    /* 補足テキスト（サブカラー） */
-    --primary: #2563eb;
-    /* ブランドカラー（青系） */
-    --primary-ink: #ffffff;
-    /* プライマリボタン上の文字色 */
-    --ring: rgba(37, 99, 235, .35);
-    /* フォーカスリングの色 */
-    --border: #e5e7eb;
-    /* 枠線の色 */
-    --favorite: #facc15;
-    /* お気に入り（★）の色 */
+    /* colors */
+    --b-bg: #fdfaf4;
+    --b-surface: #ffffff;
+    --b-surface-soft: #f5f1e9;
+    --b-text: #1f2933;
+    --b-muted: #6b7280;
 
-    /* レイアウト・影・角丸 */
-    --radius: 14px;
-    --shadow: 0 6px 24px rgba(15, 23, 42, .08);
-    --shadow-sm: 0 2px 10px rgba(15, 23, 42, .06);
+    --b-primary: #10b981;
+    /* メイン：ミントグリーン */
+    --b-primary-ink: #02311f;
+    --b-primary-soft: #d1fae5;
 
-    /* スペーシング単位（共通余白） */
-    --space-1: 6px;
-    --space-2: 10px;
-    --space-3: 14px;
-    --space-4: 18px;
-    --space-5: 24px;
-    --space-6: 32px;
+    --b-accent: #f97316;
+    /* サブ：オレンジ */
+    --b-accent-soft: #ffedd5;
 
-    /* コンポーネント専用カラー */
-    --table-stripe: #fafafa;
-    /* テーブル行の交互背景 */
-    --badge-bg: #eef2ff;
-    /* バッジの背景色 */
-    --badge-fg: #3730a3;
-    /* バッジの文字色 */
+    --b-border: #e5e7eb;
+    --b-ring: rgba(16, 185, 129, .45);
+
+    --b-danger: #ef4444;
+    --b-danger-soft: #fee2e2;
+
+    /* radius / shadow / spacing */
+    --b-radius-lg: 18px;
+    --b-radius-md: 10px;
+    --b-radius-sm: 6px;
+
+    --b-shadow-lg: 0 22px 45px rgba(15, 23, 42, .14);
+    --b-shadow-md: 0 10px 25px rgba(15, 23, 42, .08);
+    --b-shadow-sm: 0 4px 10px rgba(15, 23, 42, .06);
+
+    --b-space-1: 4px;
+    --b-space-2: 8px;
+    --b-space-3: 12px;
+    --b-space-4: 16px;
+    --b-space-5: 24px;
+    --b-space-6: 32px;
 }
 
-/* =====================================================
-   ダークテーマ設定
-   - OSの「ダークモード」設定を自動検知
-===================================================== */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --bg: #0b0f1a;
-        --panel: #0f172a;
-        --text: #e5e7eb;
-        --muted: #94a3b8;
-        --primary: #60a5fa;
-        --primary-ink: #0b0f1a;
-        --ring: rgba(96, 165, 250, .45);
-        --border: #1f2937;
-        --table-stripe: #0d1322;
-        --badge-bg: #111827;
-        --badge-fg: #93c5fd;
-        --shadow: 0 6px 24px rgba(2, 6, 23, .5);
-        --shadow-sm: 0 2px 10px rgba(2, 6, 23, .4);
-    }
-
-    /* 入力系のコントロール調整 */
-    .input,
-    .select {
-        color: #f8fafc;
-        /* より明るい白に変更 */
-    }
-
-    /* プルダウン（select）の選択肢スタイル */
-    .select option {
-        background: var(--bg);
-        color: var(--text);
-    }
-}
-
-/* =====================================================
-   Base（全体初期設定）
-   - box-sizingやフォント、背景などの基本ルール
-===================================================== */
-* {
+/* -----------------------------
+   Reset / Base
+----------------------------- */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
 html,
 body {
+    margin: 0;
+    padding: 0;
     height: 100%;
 }
 
 body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 14px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top left, #fefce8 0, #fdfaf4 35%, #f9fafb 100%);
+    color: var(--b-text);
 }
 
-/* =====================================================
-   Layout（アプリ全体のレイアウト構造）
-===================================================== */
+/* Angular アプリのルート領域 */
+app-root,
+app-root>* {
+    min-height: 100vh;
+}
+
+/* -----------------------------
+   Layout
+----------------------------- */
 .app-shell {
     max-width: 1120px;
     margin: 0 auto;
-    padding: var(--space-6) var(--space-5);
+    padding: var(--b-space-6) var(--b-space-4) 72px;
 }
 
 .app-header {
-    margin-bottom: var(--space-5);
-    display: grid;
-    gap: var(--space-2);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--b-space-3);
+    margin-bottom: var(--b-space-5);
 }
 
 .app-title {
-    font-size: clamp(18px, 2.2vw, 24px);
+    font-size: 26px;
     font-weight: 700;
-    letter-spacing: .2px;
+    letter-spacing: .02em;
+    color: var(--b-text);
 }
 
 .app-subtitle {
-    color: var(--muted);
+    font-size: 13px;
+    color: var(--b-muted);
 }
 
-/* =====================================================
-   Card（カードUIコンポーネント）
-===================================================== */
-.card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-}
-
-.card__header {
-    padding: var(--space-4) var(--space-5);
-    border-bottom: 1px solid var(--border);
+.app-badges {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-3);
+    gap: var(--b-space-2);
 }
 
-.card__title {
+.app-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--b-accent-soft);
+    color: var(--b-accent);
+    font-size: 11px;
     font-weight: 600;
 }
 
-.card__actions {
-    display: flex;
-    gap: var(--space-2);
+/* 検索フォーム＋結果リストの 2 カラムレイアウト（768px 以上） */
+.app-main {
+    display: grid;
+    grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+    gap: var(--b-space-5);
 }
 
-.card__body {
-    padding: var(--space-5);
+@media (max-width: 767px) {
+    .app-main {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
-/* =====================================================
-   Controls（フォーム部品・ボタンなど）
-===================================================== */
-.input,
-.select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: transparent;
-    color: var(--text);
-    outline: none;
-    transition: box-shadow .15s ease, border-color .15s ease;
+/* パネル共通 */
+.panel {
+    background: linear-gradient(135deg, #ffffff 0, #f9fafb 35%, #fef3c7 100%);
+    border-radius: var(--b-radius-lg);
+    padding: var(--b-space-5);
+    box-shadow: var(--b-shadow-lg);
+    border: 1px solid rgba(148, 163, 184, .12);
 }
 
-/* フォーカス時の視覚効果 */
-.input:focus,
-.select:focus {
-    box-shadow: 0 0 0 4px var(--ring);
-    border-color: var(--primary);
+.panel--muted {
+    background: linear-gradient(135deg, #ffffff 0, #f9fafb 40%, #e0f2fe 100%);
 }
 
-/* 通常ボタン */
-.btn {
-    appearance: none;
-    border: 1px solid var(--border);
-    padding: 10px 14px;
-    border-radius: 12px;
-    background: var(--panel);
-    color: var(--text);
-    cursor: pointer;
-    box-shadow: var(--shadow-sm);
-    transition: transform .05s ease, box-shadow .15s ease, border-color .15s ease, background .15s ease;
-    font-weight: 500;
-    /* 若干太字にして視認性UP */
+/* -----------------------------
+   Form (Search)
+----------------------------- */
+form {
+    margin: 0;
 }
 
-/* ボタンのホバー・クリック時の動き */
-.btn:hover {
-    transform: translateY(-1px);
-}
-
-.btn:active {
-    transform: translateY(0);
-}
-
-/* カラーバリエーション */
-.btn--primary {
-    background: var(--primary);
-    color: var(--primary-ink);
-    border-color: transparent;
-}
-
-.btn--ghost {
-    background: transparent;
-    box-shadow: none;
-}
-
-.btn--icon {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-/* =====================================================
-   Form Layout（フォーム配置）
-===================================================== */
 .form-grid {
     display: grid;
-    gap: var(--space-4);
-    align-items: end;
-    /* ラベルと入力欄を下揃え */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--b-space-4);
 }
 
-/* 幅720px以上でカラム化 */
-@media (min-width: 720px) {
+@media (max-width: 575px) {
     .form-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        grid-template-columns: minmax(0, 1fr);
     }
 }
 
 .form-field {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 6px;
 }
 
-/* フォーム内のボタンは幅100% */
-.form-field .btn {
-    width: 100%;
-}
-
 .form-label {
-    color: var(--muted);
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--b-muted);
 }
 
-/* =====================================================
-   Table（一覧表示）
-===================================================== */
+/* 入力・セレクト共通 */
+.input,
+.select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: var(--b-radius-md);
+    border: 1px solid var(--b-border);
+    background: rgba(255, 255, 255, .9);
+    color: var(--b-text);
+    font-size: 14px;
+    outline: none;
+    transition: border-color .16s ease, box-shadow .16s ease, transform .05s ease;
+}
+
+.input:focus,
+.select:focus {
+    border-color: var(--b-primary);
+    box-shadow: 0 0 0 2px var(--b-ring);
+    transform: translateY(-1px);
+}
+
+.input::placeholder {
+    color: #9ca3af;
+}
+
+/* number の上下ボタン調整（お好みで） */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+/* -----------------------------
+   Buttons
+----------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .02em;
+    transition: transform .1s ease, box-shadow .1s ease, background-color .15s ease, color .15s ease;
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    opacity: .55;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+/* プライマリボタン（検索ボタン等） */
+.btn--primary {
+    background: linear-gradient(135deg, var(--b-primary) 0, #22c55e 100%);
+    color: #ecfdf5;
+    box-shadow: var(--b-shadow-md);
+}
+
+.btn--primary:hover:not(:disabled) {
+    box-shadow: var(--b-shadow-lg);
+    transform: translateY(-1px);
+}
+
+.btn--ghost {
+    background: transparent;
+    border: 1px solid var(--b-border);
+    color: var(--b-muted);
+}
+
+.btn--ghost:hover:not(:disabled) {
+    background: var(--b-surface-soft);
+}
+
+/* カートボタンなど強調用 */
+.btn--accent {
+    background: linear-gradient(135deg, var(--b-accent) 0, #fb923c 100%);
+    color: #fff7ed;
+    box-shadow: var(--b-shadow-md);
+}
+
+.btn--accent:hover:not(:disabled) {
+    box-shadow: var(--b-shadow-lg);
+}
+
+/* -----------------------------
+   Table / List (検索結果)
+----------------------------- */
 .table-wrap {
-    border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--b-radius-lg);
+    background: var(--b-surface);
+    box-shadow: var(--b-shadow-md);
+    border: 1px solid rgba(148, 163, 184, .18);
     overflow: hidden;
 }
 
 .table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
+    font-size: 13px;
 }
 
-/* テーブルヘッダー */
-.table thead th {
+.table thead {
+    background: linear-gradient(90deg, var(--b-primary-soft), var(--b-accent-soft));
+}
+
+.table th,
+.table td {
+    padding: 10px 12px;
     text-align: left;
+    border-bottom: 1px solid var(--b-border);
+}
+
+.table th {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #374151;
+}
+
+.table tbody tr:nth-child(even) {
+    background: #fafaf9;
+}
+
+/* 数値・価格カラムなど */
+.td-num,
+.td-price {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 商品名カラムを少し太めに */
+.td-name {
     font-weight: 600;
-    font-size: 12px;
-    color: var(--muted);
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.02), transparent);
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
 }
 
-/* テーブル本体 */
-.table tbody td {
-    padding: 14px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-}
-
-.table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.table tbody tr:nth-child(odd) td {
-    background: var(--table-stripe);
-}
-
-/* アクション列（右端ボタン列） */
-.th-action,
+/* アクション列（「カートに追加」など） */
 .td-action {
-    text-align: center;
+    text-align: right;
 }
 
-.td-action {
-    width: 1%;
-}
-
-/* =====================================================
-   Favorite Button（お気に入りボタン）
-===================================================== */
-.fav-btn {
-    font-size: 18px;
-    padding: 4px;
+/* お気に入り / カート用のアイコンボタン */
+.icon-btn {
     border-radius: 999px;
-    /* 完全な円形に */
-    width: 36px;
-    height: 36px;
-    line-height: 1;
+    border: none;
+    padding: 6px 10px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--b-muted);
+    transition: background-color .15s ease, color .15s ease, transform .08s ease;
 }
 
-.fav-btn--active {
-    color: var(--favorite);
+.icon-btn:hover {
+    background: var(--b-surface-soft);
+    color: var(--b-accent);
+    transform: translateY(-1px);
 }
 
-/* =====================================================
-   Badge（ステータスラベル）
-===================================================== */
-.badge {
-    display: inline-block;
-    padding: 2px 8px;
-    font-size: 12px;
-    border-radius: 999px;
-    background: var(--badge-bg);
-    color: var(--badge-fg);
-    font-weight: 500;
+.icon-btn--active {
+    color: var(--b-accent);
 }
 
-/* =====================================================
-   Empty / Skeleton（データなし・ローディング）
-===================================================== */
+/* -----------------------------
+   Empty / Info
+----------------------------- */
 .empty {
+    padding: 40px 16px;
     text-align: center;
-    color: var(--muted);
-    padding: 64px 24px;
+    color: var(--b-muted);
+    font-size: 14px;
 }
 
-/* ローディング時のキラッとアニメーション */
-.skeleton {
-    border-radius: 8px;
-    background: linear-gradient(90deg, rgba(0, 0, 0, .06), rgba(0, 0, 0, .12), rgba(0, 0, 0, .06));
-    background-size: 200% 100%;
-    animation: shimmer 1.2s infinite;
-    height: 12px;
-    width: 100%;
+/* 「検索結果がありません…」メッセージなどを少しカード風に */
+.empty--card {
+    margin-top: var(--b-space-4);
+    border-radius: var(--b-radius-md);
+    background: var(--b-surface-soft);
 }
 
-/* シマー（光の動き）アニメーション定義 */
-@keyframes shimmer {
-    0% {
-        background-position: 200% 0;
-    }
+/* -----------------------------
+   Badge / Pill
+----------------------------- */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+}
 
-    100% {
-        background-position: -200% 0;
-    }
+.badge--stock-ok {
+    background: var(--b-primary-soft);
+    color: var(--b-primary-ink);
+}
+
+.badge--stock-low {
+    background: var(--b-accent-soft);
+    color: var(--b-accent);
+}
+
+.badge--out {
+    background: var(--b-danger-soft);
+    color: var(--b-danger);
 }

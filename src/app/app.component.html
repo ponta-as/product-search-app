@@ -1,21 +1,40 @@
-<div class="app-container">
-  <h1>{{ title }}</h1>
+<!-- src/app/app.component.html -->
+<div class="app-shell">
+  <!-- 画面ヘッダー -->
+  <header class="app-header">
+    <div>
+      <h1 class="app-title">商品検索＆カート管理（課題B）</h1>
+      <p class="app-subtitle">
+        条件で商品を絞り込み、★ボタンでカートに追加できます。
+      </p>
+      <div class="app-badges">
+        <span class="app-badge">検索フォーム</span>
+        <span class="app-badge">カート機能</span>
+      </div>
+    </div>
 
-  <section class="search-section">
-    <h2>検索条件</h2>
-    <app-product-search-form (search)="onSearch($event)"></app-product-search-form>
-  </section>
+    <!-- 右上にカート件数を表示 -->
+    <div>
+      <div class="app-badge">
+        カート内 {{ cartCount }} 件
+      </div>
+    </div>
+  </header>
 
-  <section class="result-section" *ngIf="products.length; else noResult">
-    <h2>検索結果</h2>
-    <app-product-list
-      [products]="products"
-      [isInCart]="isInCart"
-      (toggleCart)="onToggleCart($event)">
-    </app-product-list>
-  </section>
+  <!-- メイン：左に検索フォーム／右に検索結果 -->
+  <main class="app-main">
+    <!-- 左：検索条件パネル -->
+    <section class="panel">
+      <h2>検索条件</h2>
+      <app-product-search-form (search)="onSearch($event)">
+      </app-product-search-form>
+    </section>
 
-  <ng-template #noResult>
-    <p>検索結果がありません。条件を入力して「検索」を押してください。</p>
-  </ng-template>
+    <!-- 右：検索結果パネル -->
+    <section class="panel panel--muted">
+      <h2>検索結果</h2>
+      <app-product-list [products]="products" [isInCart]="isInCart" (toggleCart)="onToggleCart($event)">
+      </app-product-list>
+    </section>
+  </main>
 </div>

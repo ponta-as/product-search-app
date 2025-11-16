@@ -16,8 +16,10 @@ export interface ProductSearchFormValue {
   styleUrls: ['./product-search-form.component.scss'],
 })
 export class ProductSearchFormComponent {
+  /** 検索結果を親コンポーネントへ通知 */
   @Output() search = new EventEmitter<ProductSearchFormValue>();
 
+  /** フォーム入力値 */
   form: ProductSearchFormValue = {
     name: '',
     category: '',
@@ -25,8 +27,10 @@ export class ProductSearchFormComponent {
     maxPrice: null,
   };
 
+  /** カテゴリ選択肢 */
   readonly categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'];
 
+  /** フォーム送信時に親へ検索条件を渡す */
   onSearch(): void {
     this.search.emit(this.form);
   }
