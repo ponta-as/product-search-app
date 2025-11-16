@@ -70,9 +70,4 @@ export class ProductDataService {
       return true;
     });
   }
-
-  .subscribe({
-    next: csv => { ... },
-    error: () => { this.loaded = true; }
-});
 }
