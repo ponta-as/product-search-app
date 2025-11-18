@@ -34,4 +34,21 @@ export class ProductSearchFormComponent {
   onSearch(): void {
     this.search.emit(this.form);
   }
+  
+  /** フォームをクリアする */
+  goClear(): void {
+    this.form.name = '',
+    this.form.category = '',
+    this.form.minPrice = null,
+    this.form.maxPrice = null
+  }
+
+  compare(): boolean {
+    if(!!this.form.minPrice && !!this.form.maxPrice){
+      if(this.form.minPrice >= this.form.maxPrice){
+        return true
+      }
+    }
+    return false
+  }
 }

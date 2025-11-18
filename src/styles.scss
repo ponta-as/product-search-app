@@ -250,6 +250,14 @@ input[type='number'] {
     transform: translateY(-1px);
 }
 
+/* プライマリボタン（クリアボタン等） */
+.btn--primary-clear {
+    // background: linear-gradient(135deg, var(--b-primary) 0, #f8f8f800 100%);
+    background: #ffffff;
+    color: #020e08;
+    box-shadow: var(--b-shadow-md);
+}
+
 .btn--ghost {
     background: transparent;
     border: 1px solid var(--b-border);
