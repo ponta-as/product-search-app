@@ -28,6 +28,11 @@ export class AppComponent {
     private readonly cartService: CartService,
   ) { }
 
+  ngOnInit(): void {
+    // サービスが localStorage から復元したカート状態を反映
+    this.cartCount = this.cartService.getCartIds().length;
+  }
+
   onSearch(cond: {
     name?: string;
     category?: string;
