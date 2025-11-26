@@ -34,4 +34,15 @@ export class ProductSearchFormComponent {
   onSearch(): void {
     this.search.emit(this.form);
   }
+  /** 検索ボタン制御フラグ */
+  isSearchButtonDisabled = true;
+
+  /** 入力項目のチェック */
+  checkInput(): void{
+    const IsNameEmpty = !this.form.name || this.form.name.trim() === '';
+    const IsCategoryEmpty = !this.form.category || this.form.category.trim() ==='';
+    const IsMinPriceEmpty = this.form.minPrice === null;
+    const IsMaxPriceEmpty = this.form.maxPrice === null;
+    this.isSearchButtonDisabled = IsNameEmpty && IsCategoryEmpty && IsMinPriceEmpty && IsMaxPriceEmpty ;
+  }
 }
