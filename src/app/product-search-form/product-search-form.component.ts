@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 export interface ProductSearchFormValue {
@@ -11,7 +12,7 @@ export interface ProductSearchFormValue {
 @Component({
   selector: 'app-product-search-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './product-search-form.component.html',
   styleUrls: ['./product-search-form.component.scss'],
 })
@@ -28,7 +29,7 @@ export class ProductSearchFormComponent {
   };
 
   /** カテゴリ選択肢 */
-  readonly categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'];
+  categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'];
 
   /** フォーム送信時に親へ検索条件を渡す */
   onSearch(): void {
