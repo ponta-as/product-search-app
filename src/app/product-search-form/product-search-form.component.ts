@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ProductDataService } from '../services/product-data.service';
 
 export interface ProductSearchFormValue {
   name?: string;
@@ -29,7 +30,13 @@ export class ProductSearchFormComponent {
   };
 
   /** カテゴリ選択肢 */
-  categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'];
+  allCategories:string[] = [];
+  constructor(private productService: ProductDataService){}
+  ngOnInit(): void {
+    this.productService.getCategories$().subscribe(categories => {
+      this.allCategories = categories;
+    });
+  }
 
   /** フォーム送信時に親へ検索条件を渡す */
   onSearch(): void {

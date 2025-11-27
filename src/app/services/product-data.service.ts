@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../models';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface ProductSearchCondition {
   name?: string;
@@ -17,6 +19,9 @@ export class ProductDataService {
   /** 商品データ一覧 */
   private products: Product[] = [];
 
+  /** 商品データ一覧 */
+  private productsSubject = new BehaviorSubject<Product[]>([]);
+  
   constructor(private http: HttpClient) {
     /** サービス生成時に CSV を読み込み */
     this.loadProductsFromCSV();
@@ -32,6 +37,7 @@ export class ProductDataService {
         next: csv => {
           this.products = this.parseCSV(csv);
           this.loaded = true;
+          this.productsSubject.next(this.products);
         },
         error: () => {
           // エラー時も loaded を true にして無限待ちを防止
@@ -58,10 +64,20 @@ export class ProductDataService {
     });
   }
 
+  /** カテゴリ一覧を返却*/
+  getCategories$(): Observable<string[]> {
+    return this.productsSubject.asObservable().pipe(
+      map(products => {
+        // 商品リストからカテゴリだけ抜き出して重複削除
+        const allCategories = products.map(p => p.category || '');
+        return [...new Set(allCategories)]; // 重複排除
+      })
+    );
+  }
+
   /** 検索条件で商品を絞り込み */
   search(cond: ProductSearchCondition): Product[] {
     if (!this.loaded) return [];
-
     return this.products.filter(p => {
       if (cond.name && !p.name.toLowerCase().includes(cond.name.toLowerCase())) return false;
       if (cond.category && p.category !== cond.category) return false;

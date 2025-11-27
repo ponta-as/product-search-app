@@ -11,7 +11,7 @@
     <label class="form-label" for="category">カテゴリ</label>
     <select id="category" class="select" name="category" [(ngModel)]="form.category" (change)="checkInput()">
       <option value="">（指定なし）</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+      <option *ngFor="let c of allCategories" [value]="c">{{ c }}</option>
     </select>
   </div>
 
