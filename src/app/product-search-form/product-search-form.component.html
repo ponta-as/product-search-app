@@ -32,4 +32,7 @@
     <button type="submit" class="btn btn--primary" id="searchButton" [disabled]="isSearchButtonDisabled">検索</button>
   </div>
 
+  <!-- エラーメッセージ -->
+  <div class="note" *ngIf="priceValidationError">価格(Min)と価格(Max)の入力に誤りがあります</div>
+
 </form>

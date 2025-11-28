@@ -42,8 +42,11 @@ export class ProductSearchFormComponent {
   onSearch(): void {
     this.search.emit(this.form);
   }
-  /** 検索ボタン制御フラグ */
+  /** 検索ボタン非活性フラグ */
   isSearchButtonDisabled = true;
+
+  /** 値段検証エラー */
+  priceValidationError = false;
 
   /** 入力項目のチェック */
   checkInput(): void{
@@ -52,5 +55,11 @@ export class ProductSearchFormComponent {
     const IsMinPriceEmpty = this.form.minPrice === null;
     const IsMaxPriceEmpty = this.form.maxPrice === null;
     this.isSearchButtonDisabled = IsNameEmpty && IsCategoryEmpty && IsMinPriceEmpty && IsMaxPriceEmpty ;
+
+    if( this.form.minPrice && this.form.maxPrice && this.form.minPrice !==null && this.form.maxPrice !==null && this.form.minPrice > this.form.maxPrice){
+      this.priceValidationError = true;
+    } else {
+      this.priceValidationError = false;
+    }
   }
 }
