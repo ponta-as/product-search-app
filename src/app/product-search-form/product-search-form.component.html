@@ -18,13 +18,13 @@
   <!-- 最低価格の指定 -->
   <div class="form-field">
     <label class="form-label" for="minPrice">価格 (Min)</label>
-    <input id="minPrice" class="input" type="number" name="minPrice" [(ngModel)]="form.minPrice" placeholder="例）1円" (input)="checkInput()"/>
+    <input id="minPrice" class="input" type="number" name="minPrice" [(ngModel)]="form.minPrice" (input)="checkInput()"/>
   </div>
 
   <!-- 最大価格の指定 -->
   <div class="form-field">
     <label class="form-label" for="maxPrice">価格 (Max)</label>
-    <input id="maxPrice" class="input" type="number" name="maxPrice" [(ngModel)]="form.maxPrice" placeholder="例）100,000円" (input)="checkInput()"/>
+    <input id="maxPrice" class="input" type="number" name="maxPrice" [(ngModel)]="form.maxPrice" (input)="checkInput()"/>
   </div>
 
   <!-- 検索ボタン -->
@@ -32,10 +32,6 @@
     <button type="submit" class="btn btn--primary" id="searchButton" [disabled]="isSearchButtonDisabled">検索</button>
   </div>
 
-  <!-- クリアボタン -->
-  <div class="form-field">
-    <button type="button" class="btn" (click)="onClear()">クリア</button>
-  </div>
   <!-- エラーメッセージ -->
   <div class="note" *ngIf="priceValidationError">価格(Min)と価格(Max)の入力に誤りがあります</div>
 
