@@ -42,6 +42,14 @@ export class ProductSearchFormComponent {
   onSearch(): void {
     this.search.emit(this.form);
   }
+  /** フォームをクリアする */
+  onClear(): void {
+    //　フォームの値を初期化する
+    this.form = {
+    name: '',
+    category: '',
+    minPrice: null,
+    maxPrice: null,
   /** 検索ボタン非活性フラグ */
   isSearchButtonDisabled = true;
 
