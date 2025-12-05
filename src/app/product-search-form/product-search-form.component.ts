@@ -50,6 +50,8 @@ export class ProductSearchFormComponent {
     category: '',
     minPrice: null,
     maxPrice: null,
+    }
+  }
   /** 検索ボタン非活性フラグ */
   isSearchButtonDisabled = true;
 
