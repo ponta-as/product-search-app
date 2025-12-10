@@ -29,7 +29,7 @@ export class ProductSearchFormComponent {
   };
 
   /** カテゴリ選択肢 */
-  readonly categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'];
+  readonly categories: string[] = ['PC', 'Accessory', 'Display', 'Tablet'].sort();
 
   /** フォーム送信時に親へ検索条件を渡す */
   onSearch(): void {
