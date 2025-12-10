@@ -63,4 +63,15 @@ export class ProductSearchFormComponent {
       this.priceValidationError = false;
     }
   }
+    onClear() {
+    // フォームの値を初期化
+    this.form = {
+      name: '',
+      category: '',
+      minPrice: undefined,
+      maxPrice: undefined
+    };
+    // 検索ボタンを非活性にする
+    this.isSearchButtonDisabled = true;
+  }
 }
