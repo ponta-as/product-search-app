@@ -29,6 +29,7 @@
     <!-- 右：検索結果パネル -->
     <section class="panel panel--muted">
       <h2>検索結果</h2>
+      <span>{{products.length}}件</span>
       <app-product-list [products]="products" [isInCart]="isInCart" (toggleCart)="onToggleCart($event)">
       </app-product-list>
     </section>

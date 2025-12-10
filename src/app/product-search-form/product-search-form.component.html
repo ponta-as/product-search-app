@@ -27,7 +27,7 @@
     <input id="maxPrice" class="input" type="number" name="maxPrice" [(ngModel)]="form.maxPrice" placeholder="例）30,000"/>
   </div>
 
-  <div *ngIf="compare()">"価格 (Max)は価格 (Min)より大きくしてください"</div>
+  <div *ngIf="compare()" style="color:red;">価格 (Max)は価格 (Min)より大きくしてください</div>
 
   <!-- 検索ボタン -->
   <div class="form-field">

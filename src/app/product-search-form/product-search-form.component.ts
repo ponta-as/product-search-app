@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -11,7 +12,7 @@ export interface ProductSearchFormValue {
 @Component({
   selector: 'app-product-search-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './product-search-form.component.html',
   styleUrls: ['./product-search-form.component.scss'],
 })
