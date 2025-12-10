@@ -11,25 +11,31 @@
     <label class="form-label" for="category">カテゴリ</label>
     <select id="category" class="select" name="category" [(ngModel)]="form.category">
       <option value="">（指定なし）</option>
-      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+      <option *ngFor="let c of (productData.categories$ | async)" [value]="c">{{ c }}</option>
     </select>
   </div>
 
   <!-- 最低価格の指定 -->
   <div class="form-field">
     <label class="form-label" for="minPrice">価格 (Min)</label>
-    <input id="minPrice" class="input" type="number" name="minPrice" [(ngModel)]="form.minPrice" />
+    <input id="minPrice" class="input" type="number" name="minPrice" [(ngModel)]="form.minPrice" placeholder="例）1000" />
   </div>
 
   <!-- 最大価格の指定 -->
   <div class="form-field">
     <label class="form-label" for="maxPrice">価格 (Max)</label>
-    <input id="maxPrice" class="input" type="number" name="maxPrice" [(ngModel)]="form.maxPrice" />
+    <input id="maxPrice" class="input" type="number" name="maxPrice" [(ngModel)]="form.maxPrice" placeholder="例）50000" />
   </div>
 
-  <!-- 検索ボタン -->
+  <!-- 価格上下関係の注意文 -->
+  <div class="form-field" *ngIf="priceInvalid">
+    <div class="form-error" style="color: #c00;">価格 (Min) が 価格 (Max) より大きくなっています。範囲を確認してください。</div>
+  </div>
+
+  <!-- 操作ボタン（検索／クリア） -->
   <div class="form-field">
-    <button type="submit" class="btn btn--primary">検索</button>
+    <button type="submit" class="btn btn--primary" [disabled]="isAllEmpty">検索</button>
+    <button type="button" class="btn" (click)="clear()">クリア</button>
   </div>
 
 </form>

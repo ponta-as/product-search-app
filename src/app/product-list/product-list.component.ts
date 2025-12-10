@@ -23,4 +23,9 @@ export class ProductListComponent {
   onToggleCart(id: number): void {
     this.toggleCart.emit(id);
   }
+
+  /** ヒット件数 */
+  get hitCount(): number {
+    return this.products?.length ?? 0;
+  }
 }
