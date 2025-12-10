@@ -43,7 +43,8 @@ export class ProductDataService {
 
   /** CSV → Product[] に変換 */
   private parseCSV(csv: string): Product[] {
-    const lines = csv.trim().split('\n');
+    const arr = csv.trim().split('\r\n');
+    const lines = this.remove_items_in_array(arr);
     lines.shift(); // 先頭行はヘッダー
 
     return lines.map(line => {
@@ -57,6 +58,17 @@ export class ProductDataService {
       } as Product;
     });
   }
+
+  // 指定した配列から空の項目を削除する関数
+  remove_items_in_array(arr: string[]): string[] {
+    for (var i = 0; i < arr.length; i++) {
+      if(arr[i] === '') {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+    return arr;
+  };
 
   /** 検索条件で商品を絞り込み */
   search(cond: ProductSearchCondition): Product[] {
